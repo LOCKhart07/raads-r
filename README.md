@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# RAADS-R
 
-## Getting Started
+A RAADS-R self-assessment app built with Next.js and React, and packaged for desktop with Tauri 2. The app presents the questionnaire, calculates total and category scores, and shows a summary of responses.
 
-First, run the development server:
+> This app is for self-reflection only. It is not a diagnostic tool and does not replace an evaluation by a qualified professional.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Requirements
+
+- [Bun](https://bun.sh/) 1.4.0
+- [Rust](https://www.rust-lang.org/tools/install) (stable toolchain)
+- The native build prerequisites for [Tauri 2](https://v2.tauri.app/start/prerequisites/) on your operating system
+
+## Getting started
+
+Install the JavaScript dependencies:
+
+```sh
+bun install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Run the web app locally:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+bun run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000](http://localhost:3000) in a browser.
 
-## Learn More
+Run the desktop app in development mode:
 
-To learn more about Next.js, take a look at the following resources:
+```sh
+bunx tauri dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Build
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Create a static web export in `out/`:
 
-## Deploy on Vercel
+```sh
+bun run build
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Build a desktop app bundle for the current platform:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```sh
+bunx tauri build
+```
+
+Tauri runs the frontend build as part of its build process. Bundles are written under `src-tauri/target/release/bundle/`.
+
+## Project structure
+
+- `app/` — Next.js pages for the home screen, questionnaire, and results
+- `data/questions.json` — questionnaire text
+- `data/categories.json` — question-to-category scoring data
+- `src-tauri/` — Tauri desktop application and bundle configuration
+
+The questionnaire responses are held in browser session storage to display the results during the current session.
